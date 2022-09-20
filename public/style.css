@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Roboto',sans-serif;
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+
+}
+
+img{
+    width: 70%;
+    margin-top: 30px;
+}
+
+.choose-word{
+    background-color: rgb(33, 174, 96);
+    width: 180px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 60px;
+    
+}
+
+.keyboard{
+    margin-top: 40px;
+    width: 750px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 auto;
+    margin-top: 40px
+
+}
+
+.word{
+    background-color: rgb(160, 170, 180);
+    color: rgb(77, 84, 94);
+    border: none;
+    border-radius: 5px;
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+    font-weight: 900;
+    
+}
+
+.footer{
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+h4{
+    font-size: 20px;
+    margin-top: 7px;
+}
+
+.input{
+    width: 400px;
+    margin: 0 20px;
+}
+
+.kick{
+    background-color: rgb(227, 237, 246);
+    color: rgb(48, 75, 105);
+    border-color:rgb(77, 108, 137);
+    border-radius: 5px;
+    width: 80px;
+    height: 40px;
+    font-size: 16px;
+    font: bolder;
+    font-weight: 900;
+
+}
+   
