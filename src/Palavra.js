@@ -1,8 +1,8 @@
-export default function Palavra(props){
+export default function Palavra({onclick, arr, corClass, palavra, index, letra}){
 
     return(
         <>
-            <button onClick={props.onclick} className={props.corClass}> {props.palavra} </button>
+            <button onClick={() => onclick(letra, index)} className={arr.includes(index) || corClass === 'word' ? 'word' : "habilitada"}> {palavra} </button>
         </>
     )
 }

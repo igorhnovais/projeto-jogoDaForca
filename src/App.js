@@ -19,10 +19,14 @@ export default function App() {
 
     let escolhida = '';
 
-    const[palavraSorteada, setPalavraSorteada] = useState(0);
-    const[palavraMostrada, setPalavraMostrada] = useState([]);
-    const[corPalavra, setCorPalavra] = useState('word');
-    const [clicada, setClicada] = useState('habilitada');
+    const [palavraSorteada, setPalavraSorteada] = useState([]);
+    const [underlineMostrado, setunderlineMostrado] = useState([]);
+    const [corPalavra, setCorPalavra] = useState('word');
+    const [clicada, setClicada] = useState([]);
+    const [vogal, setVogal] = useState([]);
+    const [foto, setFoto] = useState(forca0);
+    const [letrasClicadas, setLetrasClicadas] = useState(alfabeto)
+
 
 
 
@@ -31,49 +35,73 @@ export default function App() {
         escolhida = palavras[sorteada].split('');
         
         setPalavraSorteada(escolhida);
+        console.log(escolhida)
+        setClicada([]);
 
-        mostrarPalavra()
+        mostrarPalavraHabilitada()
+        letraClicada()
     }
 
 
-    function mostrarPalavra(){
+    function mostrarPalavraHabilitada(){
         
-        let arr = [];
+        // let arr = [];
 
-        for(let i = 0; i < escolhida.length; i++){
-            arr.push("_ ")
-        }
-        setPalavraMostrada(arr);
+        // for(let i = 0; i < escolhida.length; i++){
+        //     arr.push("_ ")
+        // }
+        // setunderlineMostrado(arr);
 
         setCorPalavra('habilitada');
     }
 
-    function apertarTecla(index){
-        alert('oi');
-        if(corPalavra === 'habilitada'){
-            setCorPalavra('word')
+    function apertarTecla(letra, index){
+
+        //alert('apertou tecla')
+
+        if(!clicada.includes(index)){
+            const arr = [...clicada, index]
+            setClicada(arr)
         }
-        
+
+        letraClicada(letra, index)
     }
 
 
+    function letraClicada(letra, index){
+
+        if(palavraSorteada.includes(letra)){
+
+            setVogal([...vogal, letra])
+            
+        } else {
+            letraErrada()
+        }   
+    }
+
+    let quantidadeErro = 0;
+
+    function letraErrada(){
+       
+        alert('errou')
+    }
 
     return (
         <>
             <section className="header">
                 <div>
-                    <img src={forca0} />
+                    <img src={foto} />
                 </div>
                 <div className="aside">
                     <button onClick={palavraAleatoria} className="choose-word"> Escolher palavra </button>
                     <div className="underline">
-                        <h1>{palavraMostrada}</h1>
+                        <div> {palavraSorteada.map((item, i) => <h1 key={i} > {vogal.includes(item.normalize("NFD").replace(/[^a-zA-Z\s]/g, "")) ? `${item}` : "_"}  </h1>)} </div>
                     </div>
                 </div>
             </section>
 
             <div className="keyboard">
-                {alfabeto.map((item,i) => <Palavra onclick={apertarTecla} palavra={alfabeto[i]} corClass={corPalavra} key={i} />)}
+                {alfabeto.map((item,i) => <Palavra onclick={apertarTecla} letra ={item} index={i} palavra={alfabeto[i]} arr={clicada} corClass={corPalavra} key={i} />)}
             </div>
 
             <div className="footer">
