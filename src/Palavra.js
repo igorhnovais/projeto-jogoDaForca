@@ -2,7 +2,7 @@ export default function Palavra(props){
 
     return(
         <>
-            <button className="word"> {props.palavra} </button>
+            <button onClick={props.onclick} className={props.corClass}> {props.palavra} </button>
         </>
     )
 }

@@ -33,6 +33,21 @@ img{
     
 }
 
+.aside{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.underline{
+    display: flex;
+}
+
+h1{
+    font-size: 60px;
+    margin-right: 10px;
+}
+
 .keyboard{
     margin-top: 40px;
     width: 750px;
@@ -55,6 +70,17 @@ img{
     font-size: 16px;
     font-weight: 900;
     
+}
+
+.habilitada{
+    background-color: rgb(227, 237, 246);
+    color: rgb(48, 75, 105);
+    border-color:rgb(77, 108, 137);
+    border-radius: 5px;
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+    font-weight: 900; 
 }
 
 .footer{
