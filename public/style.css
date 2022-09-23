@@ -48,6 +48,13 @@ h1{
     margin-right: 10px;
 }
 
+.perdeu{
+    color: red;
+}
+.ganhou{
+    color: green;
+}
+
 .keyboard{
     margin-top: 40px;
     width: 750px;
