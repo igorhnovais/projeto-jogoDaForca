@@ -25,6 +25,8 @@ export default function App() {
     const [vogal, setVogal] = useState([]);
     const [foto, setFoto] = useState(forca0);
     const [classe, setClasse] = useState("");
+    const [chute, setChute] = useState("");
+
 
 
     function palavraAleatoria() {
@@ -37,12 +39,14 @@ export default function App() {
         setClicada([]);
 
         mostrarPalavraHabilitada();
+        reiniciarJogo();
     }
 
 
     function mostrarPalavraHabilitada() {
         setCorPalavra('habilitada');
     }
+
 
     function apertarTecla(letra, index) {
 
@@ -51,45 +55,84 @@ export default function App() {
             setClicada(arr)
         }
 
-
         letraClicada(letra, index)
     }
-
 
 
     function letraClicada(letra, index) {
 
         const palavraSemAcento = palavraSorteada.join('').normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
-        // escolhida = palavraSemAcento.split('');
-
-        //console.log(`oi ${palavraSemAcento}`)
+        
         if (palavraSemAcento.includes(letra)) {
 
-            const novaVogal = [...vogal, letra];
-            
-            setVogal(novaVogal);
-
-            const palavraAtual = palavraSemAcento.split("").map(item => novaVogal.includes(item) ? item : "_").join("");
-
-            if (palavraAtual === palavraSemAcento) setClasse('ganhou');
-           
-
+            jogoGanho(letra);
         } else {
 
-            switch (quantidadeErro += 1) {
-                case 1: return setFoto(forca1);
-                case 2: return setFoto(forca2);
-                case 3: return setFoto(forca3);
-                case 4: return setFoto(forca4);
-                case 5: return setFoto(forca5);
-                case 6: setFoto(forca6);
-                    setClasse('perdeu');
-                    setVogal(palavraSorteada);
-                    setCorPalavra('word');
-                    break;
-                default: break;
-            }
+            jogoPerdido();
+        }
+    }
 
+    function jogoGanho(letra) {
+
+        let letraComAcento = '';
+
+        for(let i=0; i < palavraSorteada.length; i++){
+            if(letra === palavraSorteada[i].normalize("NFD").replace(/[^a-zA-Z\s]/g, "")){
+                letraComAcento = palavraSorteada[i];
+            }
+        }
+        const novaVogal = [...vogal, letraComAcento];
+
+        setVogal(novaVogal);
+
+        const palavraAtual = palavraSorteada.map(item => novaVogal.includes(item) ? item : "_").join("");
+
+        console.log(palavraAtual);
+        if (palavraAtual === palavraSorteada.join('')) {
+            setClasse('ganhou');
+            setCorPalavra('word');
+        }
+    }
+
+    function jogoPerdido() {
+        switch (quantidadeErro += 1) {
+            case 1: return setFoto(forca1);
+            case 2: return setFoto(forca2);
+            case 3: return setFoto(forca3);
+            case 4: return setFoto(forca4);
+            case 5: return setFoto(forca5);
+            case 6:
+                setFoto(forca6);
+                setClasse('perdeu');
+                setVogal(palavraSorteada);
+                setCorPalavra('word');
+                break;
+            default: break;
+        }
+    }
+
+    function reiniciarJogo() {
+        const limpaArray = vogal.filter((item) => !item === "_");
+        setVogal(limpaArray);
+        setClasse('');
+        setFoto(forca0);
+        quantidadeErro = 0;
+    }
+
+    function chutarPalavra() {
+        //const palavraSemAcento = palavraSorteada.join('').normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
+
+        if (chute.normalize("NFD").replace(/[^a-zA-Z\s]/g, "") === palavraSorteada.join("").normalize("NFD").replace(/[^a-zA-Z\s]/g, "")) {
+            setClasse('ganhou');
+            setCorPalavra('word');
+            setVogal(palavraSorteada);
+
+        } else {
+            setFoto(forca6);
+            setClasse('perdeu');
+
+            setVogal(palavraSorteada);
+            setCorPalavra('word');
         }
     }
 
@@ -102,7 +145,7 @@ export default function App() {
                 <div className="aside">
                     <button onClick={palavraAleatoria} className="choose-word"> Escolher palavra </button>
                     <div className="underline">
-                        <div> {palavraSorteada.map((item, i) => <h1 className={classe} key={i}> {(vogal.includes(item.normalize("NFD").replace(/[^a-zA-Z\s]/g, ""))) ? `${item}` : "_"} </h1>)} </div>
+                        <div> {palavraSorteada.map((item, i) => <h1 className={classe} key={i}> {(vogal.includes(item)) ? `${item}` : "_"} </h1>)} </div>
                     </div>
                 </div>
             </section>
@@ -113,8 +156,8 @@ export default function App() {
 
             <div className="footer">
                 <h4> Já sei a palavra!</h4>
-                <input className="input"></input>
-                <button className="kick"> Chutar </button>
+                <input value={chute} onChange={(e) => setChute(e.target.value)} className="input"></input>
+                <button onClick={chutarPalavra} className="kick"> Chutar </button>
             </div>
         </>
     )
