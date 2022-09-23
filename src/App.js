@@ -51,34 +51,28 @@ export default function App() {
             setClicada(arr)
         }
 
-        
+
         letraClicada(letra, index)
     }
 
-    
+
 
     function letraClicada(letra, index) {
 
         const palavraSemAcento = palavraSorteada.join('').normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
-       // escolhida = palavraSemAcento.split('');
-        
+        // escolhida = palavraSemAcento.split('');
+
         //console.log(`oi ${palavraSemAcento}`)
         if (palavraSemAcento.includes(letra)) {
 
-            setVogal([...vogal, letra])
-
-
-            // let verificarArray = [...vogal];
+            const novaVogal = [...vogal, letra];
             
-    
-            // for(let i = 0; i < palavraSemAcento.length; i++){
+            setVogal(novaVogal);
 
-            //     if(vogal.length === ){
-            //         setClasse('ganhou');
-            //     }
-            // }
+            const palavraAtual = palavraSemAcento.split("").map(item => novaVogal.includes(item) ? item : "_").join("");
 
-            // console.log(verificarArray);
+            if (palavraAtual === palavraSemAcento) setClasse('ganhou');
+           
 
         } else {
 
@@ -89,9 +83,9 @@ export default function App() {
                 case 4: return setFoto(forca4);
                 case 5: return setFoto(forca5);
                 case 6: setFoto(forca6);
-                        setClasse('perdeu');
-                        setVogal(palavraSorteada);
-                        setCorPalavra('word');
+                    setClasse('perdeu');
+                    setVogal(palavraSorteada);
+                    setCorPalavra('word');
                     break;
                 default: break;
             }
@@ -106,7 +100,7 @@ export default function App() {
                     <img src={foto} alt={foto} />
                 </div>
                 <div className="aside">
-                    <button  onClick={palavraAleatoria} className="choose-word"> Escolher palavra </button>
+                    <button onClick={palavraAleatoria} className="choose-word"> Escolher palavra </button>
                     <div className="underline">
                         <div> {palavraSorteada.map((item, i) => <h1 className={classe} key={i}> {(vogal.includes(item.normalize("NFD").replace(/[^a-zA-Z\s]/g, ""))) ? `${item}` : "_"} </h1>)} </div>
                     </div>
