@@ -8,7 +8,6 @@ import forca4 from "./assets/forca4.png";
 import forca5 from "./assets/forca5.png";
 import forca6 from "./assets/forca6.png";
 
-
 import palavras from "./Palavras";
 import Palavra from "./Palavra";
 
@@ -30,13 +29,13 @@ export default function App() {
 
 
     function palavraAleatoria() {
-        //window.location.reload();
         let sorteada = Math.floor(Math.random() * palavras.length);
         escolhida = palavras[sorteada].split('');
 
         setPalavraSorteada(escolhida);
         console.log(escolhida)
         setClicada([]);
+        setChute("");
 
         mostrarPalavraHabilitada();
         reiniciarJogo();
@@ -59,10 +58,10 @@ export default function App() {
     }
 
 
-    function letraClicada(letra, index) {
+    function letraClicada(letra) {
 
         const palavraSemAcento = palavraSorteada.join('').normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
-        
+
         if (palavraSemAcento.includes(letra)) {
 
             jogoGanho(letra);
@@ -72,16 +71,18 @@ export default function App() {
         }
     }
 
+
     function jogoGanho(letra) {
 
-        let letraComAcento = '';
+        let letraComAcento = [];
 
         for(let i=0; i < palavraSorteada.length; i++){
             if(letra === palavraSorteada[i].normalize("NFD").replace(/[^a-zA-Z\s]/g, "")){
-                letraComAcento = palavraSorteada[i];
+                letraComAcento.push(palavraSorteada[i]);
             }
         }
-        const novaVogal = [...vogal, letraComAcento];
+        
+        const novaVogal = [...vogal, ...letraComAcento];
 
         setVogal(novaVogal);
 
@@ -93,6 +94,7 @@ export default function App() {
             setCorPalavra('word');
         }
     }
+
 
     function jogoPerdido() {
         switch (quantidadeErro += 1) {
@@ -116,16 +118,17 @@ export default function App() {
         setVogal(limpaArray);
         setClasse('');
         setFoto(forca0);
+        setChute("");
         quantidadeErro = 0;
     }
 
     function chutarPalavra() {
-        //const palavraSemAcento = palavraSorteada.join('').normalize("NFD").replace(/[^a-zA-Z\s]/g, "");
 
         if (chute.normalize("NFD").replace(/[^a-zA-Z\s]/g, "") === palavraSorteada.join("").normalize("NFD").replace(/[^a-zA-Z\s]/g, "")) {
             setClasse('ganhou');
             setCorPalavra('word');
             setVogal(palavraSorteada);
+            setChute("");
 
         } else {
             setFoto(forca6);
@@ -133,6 +136,7 @@ export default function App() {
 
             setVogal(palavraSorteada);
             setCorPalavra('word');
+            setChute("");
         }
     }
 
@@ -140,12 +144,12 @@ export default function App() {
         <>
             <section className="header">
                 <div>
-                    <img src={foto} alt={foto} />
+                    <img data-identifier="game-image" src={foto} alt={foto} />
                 </div>
                 <div className="aside">
-                    <button onClick={palavraAleatoria} className="choose-word"> Escolher palavra </button>
+                    <button onClick={palavraAleatoria} className="choose-word" data-identifier="choose-word"> Escolher palavra </button>
                     <div className="underline">
-                        <div> {palavraSorteada.map((item, i) => <h1 className={classe} key={i}> {(vogal.includes(item)) ? `${item}` : "_"} </h1>)} </div>
+                        <div> {palavraSorteada.map((item, i) => <h1 className={classe} key={i} data-identifier="word"> {(vogal.includes(item)) ? `${item}` : "_"} </h1>)} </div>
                     </div>
                 </div>
             </section>
@@ -156,8 +160,8 @@ export default function App() {
 
             <div className="footer">
                 <h4> Já sei a palavra!</h4>
-                <input value={chute} onChange={(e) => setChute(e.target.value)} className="input"></input>
-                <button onClick={chutarPalavra} className="kick"> Chutar </button>
+                <input value={chute} onChange={(e) => setChute(e.target.value)} className="input" data-identifier="type-guess" ></input>
+                <button disabled={corPalavra === 'word' ? true : false } onClick={chutarPalavra} className="kick" data-identifier="guess-button"> Chutar </button>
             </div>
         </>
     )
