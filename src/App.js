@@ -25,6 +25,7 @@ export default function App() {
     const [foto, setFoto] = useState(forca0);
     const [classe, setClasse] = useState("");
     const [chute, setChute] = useState("");
+    const [botaoIniciar, setBotaoIniciar] = useState("Escolher palavra");
 
 
 
@@ -44,6 +45,7 @@ export default function App() {
 
     function mostrarPalavraHabilitada() {
         setCorPalavra('habilitada');
+        setBotaoIniciar('Mudar a palavra')
     }
 
 
@@ -92,6 +94,7 @@ export default function App() {
         if (palavraAtual === palavraSorteada.join('')) {
             setClasse('ganhou');
             setCorPalavra('word');
+            setBotaoIniciar('Nova palavra');
         }
     }
 
@@ -108,6 +111,7 @@ export default function App() {
                 setClasse('perdeu');
                 setVogal(palavraSorteada);
                 setCorPalavra('word');
+                setBotaoIniciar('Nova palavra');
                 break;
             default: break;
         }
@@ -129,6 +133,7 @@ export default function App() {
             setCorPalavra('word');
             setVogal(palavraSorteada);
             setChute("");
+            setBotaoIniciar('Nova palavra');
 
         } else {
             setFoto(forca6);
@@ -137,6 +142,7 @@ export default function App() {
             setVogal(palavraSorteada);
             setCorPalavra('word');
             setChute("");
+            setBotaoIniciar('Nova palavra');
         }
     }
 
@@ -147,7 +153,7 @@ export default function App() {
                     <img data-identifier="game-image" src={foto} alt={foto} />
                 </div>
                 <div className="aside">
-                    <button onClick={palavraAleatoria} className="choose-word" data-identifier="choose-word"> Escolher palavra </button>
+                    <button onClick={palavraAleatoria} className="choose-word" data-identifier="choose-word"> {botaoIniciar} </button>
                     <div className="underline">
                         <div> {palavraSorteada.map((item, i) => <h1 className={classe} key={i} data-identifier="word"> {(vogal.includes(item)) ? `${item}` : "_"} </h1>)} </div>
                     </div>
@@ -160,7 +166,7 @@ export default function App() {
 
             <div className="footer">
                 <h4> Já sei a palavra!</h4>
-                <input value={chute} onChange={(e) => setChute(e.target.value)} className="input" data-identifier="type-guess" ></input>
+                <input placeholder="Chute a palavra aqui..." value={chute} onChange={(e) => setChute(e.target.value)} className="input" data-identifier="type-guess" ></input>
                 <button disabled={corPalavra === 'word' ? true : false } onClick={chutarPalavra} className="kick" data-identifier="guess-button"> Chutar </button>
             </div>
         </>

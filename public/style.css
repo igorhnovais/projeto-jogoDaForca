@@ -75,9 +75,9 @@ h1{
     width: 45px;
     height: 45px;
     font-size: 16px;
-    font-weight: 900;
-    
+    font-weight: 900;   
 }
+
 
 .habilitada{
     background-color: rgb(227, 237, 246);
@@ -104,6 +104,7 @@ h4{
 .input{
     width: 400px;
     margin: 0 20px;
+    font-size: 18px;
 }
 
 .kick{
@@ -118,4 +119,11 @@ h4{
     font-weight: 900;
 
 }
+
+button:hover{
+    background-color: rgba(178, 192, 190, 0.9);
+    cursor: pointer;
+}
+
+
    
